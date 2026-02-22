@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
     <div class="page-bg" aria-hidden="true">
       <span class="shape shape-1"></span>
       <span class="shape shape-2"></span>
@@ -25,7 +26,7 @@
 
     <header class="site-header">
       <a href="#top" class="brand">EA</a>
-      <nav class="main-nav" aria-label="Main navigation">
+      <nav id="main-nav" class="main-nav" aria-label="Main navigation">
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
         <a href="#education">Education</a>
@@ -88,6 +89,13 @@
         <div class="section-head">
           <p class="kicker">Career</p>
           <h2>Experience</h2>
+        </div>
+        <div id="experience-filters" class="filter-row" aria-label="Experience filters">
+          <button class="filter-chip is-active" type="button" data-filter="all">All</button>
+          <button class="filter-chip" type="button" data-filter="engineering">Engineering</button>
+          <button class="filter-chip" type="button" data-filter="teaching">Teaching</button>
+          <button class="filter-chip" type="button" data-filter="coordination">Coordination</button>
+          <button class="filter-chip" type="button" data-filter="service">Service</button>
         </div>
         <div class="timeline" id="experience-list">
           <article class="timeline-item">
@@ -245,6 +253,9 @@
         <p id="contact-text">
           I'm open to opportunities where I can contribute with engineering, communication, and leadership.
         </p>
+        <div class="contact-actions">
+          <button id="copy-email-btn" class="btn btn-secondary btn-copy" type="button">Copy email</button>
+        </div>
         <div class="contact-links" id="contact-links">
           <a href="mailto:ebba.adolphson@gmail.com">ebba.adolphson@gmail.com</a>
           <a href="tel:+46760259455">+46 76-025 94 55</a>
@@ -256,6 +267,7 @@
     <footer class="site-footer">
       <p>&copy; <span id="year"></span> Ebba Adolphson</p>
     </footer>
+    <div id="ui-toast" class="ui-toast" role="status" aria-live="polite"></div>
 
     <script src="script.js"></script>
   </body>

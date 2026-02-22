@@ -43,6 +43,7 @@
           role: "Software Developer Intern",
           organization: "Eyevinn Technology",
           period: "Jan 2026 - Present",
+          category: "engineering",
           description:
             "Developing Eyevinn's Open Source Cloud product with other interns through programming, ongoing platform development, and functionality improvements.",
         },
@@ -50,6 +51,7 @@
           role: "Teaching Assistant",
           organization: "Royal Institute of Technology (KTH)",
           period: "Sep 2024 - Present",
+          category: "teaching",
           description:
             "Leading exercises and labs for first-year engineering students across bachelor's and master's programs. Supervising and examining students in problem-solving and logical reasoning.",
         },
@@ -57,6 +59,7 @@
           role: "Events Coordinator",
           organization: "Sakerhetsbranschen",
           period: "Feb 2026 - Present",
+          category: "coordination",
           description:
             "Supporting planning for the annual SakerhetsDagen security fair by coordinating venues and speakers, and handling customer service and inbound company inquiries.",
         },
@@ -65,9 +68,17 @@
           organization:
             "Royal Swedish Opera, Confidencen, Ulriksdals Slottsteater",
           period: "Oct 2024 - Present",
+          category: "service",
           description:
             "Welcoming and assisting guests before, during, and after events to ensure a safe and positive visitor experience, while also delivering high-quality cafe service.",
         },
+      ],
+      experienceFilters: [
+        { key: "all", label: "All" },
+        { key: "engineering", label: "Engineering" },
+        { key: "teaching", label: "Teaching" },
+        { key: "coordination", label: "Coordination" },
+        { key: "service", label: "Service" },
       ],
       education: [
         {
@@ -139,6 +150,7 @@
         title: "Let's work together",
         message:
           "I'm open to opportunities where I can contribute with engineering, communication, and leadership.",
+        copyEmail: "ebba.adolphson@gmail.com",
         links: [
           {
             label: "ebba.adolphson@gmail.com",
@@ -160,14 +172,18 @@
 
   function PortfolioView() {
     this.nodes = {
+      mainNav: document.getElementById("main-nav"),
+      scrollProgress: document.getElementById("scroll-progress"),
       heroKicker: document.getElementById("hero-kicker"),
       heroName: document.getElementById("hero-name"),
       heroIntro: document.getElementById("hero-intro"),
       heroImage: document.getElementById("hero-image"),
       heroImageFallback: document.getElementById("hero-image-fallback"),
+      heroPhotoFrame: document.querySelector(".hero-photo-frame"),
       aboutSummaryOne: document.getElementById("about-summary-1"),
       aboutSummaryTwo: document.getElementById("about-summary-2"),
       quickFactsList: document.getElementById("quick-facts-list"),
+      experienceFilters: document.getElementById("experience-filters"),
       experienceList: document.getElementById("experience-list"),
       educationList: document.getElementById("education-list"),
       engagementsList: document.getElementById("engagements-list"),
@@ -176,9 +192,12 @@
       languagesList: document.getElementById("languages-list"),
       contactTitle: document.getElementById("contact-title"),
       contactText: document.getElementById("contact-text"),
+      copyEmailButton: document.getElementById("copy-email-btn"),
       contactLinks: document.getElementById("contact-links"),
+      toast: document.getElementById("ui-toast"),
       year: document.getElementById("year"),
     };
+    this.toastTimer = null;
   }
 
   PortfolioView.prototype.complete = function (callback) {
@@ -311,6 +330,41 @@
       li.appendChild(strong);
       li.appendChild(text);
       list.appendChild(li);
+    }
+
+    this.complete(callback);
+  };
+
+  PortfolioView.prototype.renderExperienceFilters = function (
+    filters,
+    activeFilter,
+    callback
+  ) {
+    var container = this.nodes.experienceFilters;
+    var i;
+    var item;
+    var button;
+
+    this.clearNode(container);
+
+    if (!container) {
+      this.complete(callback);
+      return;
+    }
+
+    for (i = 0; i < filters.length; i += 1) {
+      item = filters[i];
+      button = document.createElement("button");
+      button.type = "button";
+      button.className = "filter-chip";
+      button.setAttribute("data-filter", item.key);
+      button.textContent = item.label;
+
+      if (item.key === activeFilter) {
+        button.classList.add("is-active");
+      }
+
+      container.appendChild(button);
     }
 
     this.complete(callback);
@@ -584,6 +638,225 @@
     this.complete(callback);
   };
 
+  PortfolioView.prototype.showToast = function (message) {
+    var toast = this.nodes.toast;
+
+    if (!toast) {
+      return;
+    }
+
+    toast.textContent = message;
+    toast.classList.add("is-visible");
+
+    if (this.toastTimer) {
+      window.clearTimeout(this.toastTimer);
+    }
+
+    this.toastTimer = window.setTimeout(function () {
+      toast.classList.remove("is-visible");
+    }, 1800);
+  };
+
+  PortfolioView.prototype.copyTextFallback = function (text) {
+    var textArea = document.createElement("textarea");
+    var isCopied = false;
+
+    textArea.value = text;
+    textArea.setAttribute("readonly", "readonly");
+    textArea.style.position = "absolute";
+    textArea.style.left = "-9999px";
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+      isCopied = document.execCommand("copy");
+    } catch (error) {
+      isCopied = false;
+    }
+
+    document.body.removeChild(textArea);
+    return isCopied;
+  };
+
+  PortfolioView.prototype.bindCopyEmail = function (email, callback) {
+    var button = this.nodes.copyEmailButton;
+    var self = this;
+
+    if (!button || !email) {
+      this.complete(callback);
+      return;
+    }
+
+    button.addEventListener("click", function () {
+      if (
+        navigator.clipboard &&
+        typeof navigator.clipboard.writeText === "function"
+      ) {
+        navigator.clipboard.writeText(email).then(
+          function () {
+            self.showToast("Email copied to clipboard");
+          },
+          function () {
+            if (self.copyTextFallback(email)) {
+              self.showToast("Email copied to clipboard");
+            } else {
+              self.showToast("Copy failed. Please copy manually.");
+            }
+          }
+        );
+      } else if (self.copyTextFallback(email)) {
+        self.showToast("Email copied to clipboard");
+      } else {
+        self.showToast("Copy failed. Please copy manually.");
+      }
+    });
+
+    this.complete(callback);
+  };
+
+  PortfolioView.prototype.bindExperienceFilter = function (onSelect, callback) {
+    var container = this.nodes.experienceFilters;
+
+    if (!container) {
+      this.complete(callback);
+      return;
+    }
+
+    container.addEventListener("click", function (event) {
+      var target = event.target;
+
+      if (!target || target.tagName !== "BUTTON") {
+        return;
+      }
+
+      if (typeof onSelect === "function") {
+        onSelect(target.getAttribute("data-filter") || "all");
+      }
+    });
+
+    this.complete(callback);
+  };
+
+  PortfolioView.prototype.bindScrollProgress = function (callback) {
+    var progressNode = this.nodes.scrollProgress;
+
+    function updateProgress() {
+      var doc = document.documentElement;
+      var scrollTop = doc.scrollTop || document.body.scrollTop;
+      var scrollHeight = doc.scrollHeight - doc.clientHeight;
+      var ratio = 0;
+
+      if (scrollHeight > 0) {
+        ratio = (scrollTop / scrollHeight) * 100;
+      }
+
+      if (progressNode) {
+        progressNode.style.width = String(ratio) + "%";
+      }
+    }
+
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    updateProgress();
+    this.complete(callback);
+  };
+
+  PortfolioView.prototype.bindSectionSpy = function (callback) {
+    var nav = this.nodes.mainNav;
+    var links;
+    var sectionMap = [];
+    var i;
+
+    function setActiveLink(activeId) {
+      links.forEach(function (link) {
+        if (link.getAttribute("href") === "#" + activeId) {
+          link.classList.add("is-active");
+        } else {
+          link.classList.remove("is-active");
+        }
+      });
+    }
+
+    function updateActive() {
+      var currentId = "";
+      var bestTop = -Infinity;
+
+      sectionMap.forEach(function (entry) {
+        var rect = entry.section.getBoundingClientRect();
+        var trigger = window.innerHeight * 0.35;
+
+        if (rect.top <= trigger && rect.top > bestTop) {
+          bestTop = rect.top;
+          currentId = entry.id;
+        }
+      });
+
+      if (!currentId && sectionMap.length > 0) {
+        currentId = sectionMap[0].id;
+      }
+
+      if (currentId) {
+        setActiveLink(currentId);
+      }
+    }
+
+    if (!nav) {
+      this.complete(callback);
+      return;
+    }
+
+    links = nav.querySelectorAll("a[href^='#']");
+
+    for (i = 0; i < links.length; i += 1) {
+      (function (link) {
+        var href = link.getAttribute("href");
+        var id = href ? href.slice(1) : "";
+        var section = document.getElementById(id);
+
+        if (section) {
+          sectionMap.push({ id: id, section: section });
+        }
+      })(links[i]);
+    }
+
+    window.addEventListener("scroll", updateActive, { passive: true });
+    window.addEventListener("resize", updateActive);
+    updateActive();
+    this.complete(callback);
+  };
+
+  PortfolioView.prototype.bindHeroTilt = function (callback) {
+    var frame = this.nodes.heroPhotoFrame;
+
+    if (!frame) {
+      this.complete(callback);
+      return;
+    }
+
+    frame.addEventListener("mousemove", function (event) {
+      var rect = frame.getBoundingClientRect();
+      var x = event.clientX - rect.left;
+      var y = event.clientY - rect.top;
+      var centerX = rect.width / 2;
+      var centerY = rect.height / 2;
+      var rotateY = ((x - centerX) / centerX) * 6;
+      var rotateX = ((centerY - y) / centerY) * 6;
+
+      frame.style.transform =
+        "perspective(800px) rotateX(" +
+        String(rotateX) +
+        "deg) rotateY(" +
+        String(rotateY) +
+        "deg)";
+    });
+
+    frame.addEventListener("mouseleave", function () {
+      frame.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
+    });
+
+    this.complete(callback);
+  };
+
   PortfolioView.prototype.setFooterYear = function (callback) {
     if (this.nodes.year) {
       this.nodes.year.textContent = String(new Date().getFullYear());
@@ -630,6 +903,8 @@
   function PortfolioPresenter(model, view) {
     this.model = model;
     this.view = view;
+    this.data = null;
+    this.activeExperienceFilter = "all";
   }
 
   PortfolioPresenter.prototype.runSeries = function (tasks, done) {
@@ -653,6 +928,44 @@
     next();
   };
 
+  PortfolioPresenter.prototype.getFilteredExperience = function () {
+    var filter = this.activeExperienceFilter;
+    var allItems = this.data ? this.data.experience : [];
+
+    if (!filter || filter === "all") {
+      return allItems;
+    }
+
+    return allItems.filter(function (item) {
+      return item.category === filter;
+    });
+  };
+
+  PortfolioPresenter.prototype.renderExperienceState = function (callback) {
+    var self = this;
+    var filters = this.data ? this.data.experienceFilters : [];
+    var items = this.getFilteredExperience();
+
+    this.view.renderExperienceFilters(
+      filters,
+      this.activeExperienceFilter,
+      function () {
+        self.view.renderExperience(items, callback);
+      }
+    );
+  };
+
+  PortfolioPresenter.prototype.handleExperienceFilterChange = function (
+    filterKey
+  ) {
+    var self = this;
+
+    self.activeExperienceFilter = filterKey || "all";
+    self.renderExperienceState(function () {
+      return;
+    });
+  };
+
   PortfolioPresenter.prototype.init = function () {
     var self = this;
 
@@ -663,6 +976,8 @@
         self.view.showError("Failed to load portfolio data.");
         return;
       }
+
+      self.data = data;
 
       tasks = [
         function (next) {
@@ -678,7 +993,12 @@
           self.view.renderQuickFacts(data.quickFacts, next);
         },
         function (next) {
-          self.view.renderExperience(data.experience, next);
+          self.renderExperienceState(next);
+        },
+        function (next) {
+          self.view.bindExperienceFilter(function (filterKey) {
+            self.handleExperienceFilterChange(filterKey);
+          }, next);
         },
         function (next) {
           self.view.renderEducation(data.education, next);
@@ -697,6 +1017,18 @@
         },
         function (next) {
           self.view.renderContact(data.contact, next);
+        },
+        function (next) {
+          self.view.bindCopyEmail(data.contact.copyEmail, next);
+        },
+        function (next) {
+          self.view.bindScrollProgress(next);
+        },
+        function (next) {
+          self.view.bindSectionSpy(next);
+        },
+        function (next) {
+          self.view.bindHeroTilt(next);
         },
         function (next) {
           self.view.bindRevealAnimation(next);
