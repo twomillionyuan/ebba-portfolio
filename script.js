@@ -9,7 +9,7 @@
         intro:
           "I build digital products, support student learning, and help teams execute ambitious projects. I am currently focused on software development, product functionality, and collaborative problem-solving.",
         image: {
-          src: "assets/ebba-profile.jpg",
+          src: "assets/ebba-profile.jpg?v=1",
           alt: "Portrait of Ebba Adolphson",
           fallbackInitials: "EA",
         },
@@ -258,7 +258,15 @@
       finalize();
     };
 
-    imageNode.src = imageData.src;
+    if (imageNode.src !== imageData.src) {
+      imageNode.src = imageData.src;
+    }
+
+    if (imageNode.complete && imageNode.naturalWidth > 0) {
+      showImage();
+      finalize();
+      return;
+    }
   };
 
   PortfolioView.prototype.renderAbout = function (about, callback) {
