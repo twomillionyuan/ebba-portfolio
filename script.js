@@ -8,6 +8,11 @@
         name: "Ebba Adolphson",
         intro:
           "I build digital products, support student learning, and help teams execute ambitious projects. I am currently focused on software development, product functionality, and collaborative problem-solving.",
+        image: {
+          src: "assets/ebba-profile.jpg",
+          alt: "Portrait of Ebba Adolphson",
+          fallbackInitials: "EA",
+        },
       },
       about: {
         summaryOne:
@@ -148,6 +153,8 @@
       heroKicker: document.getElementById("hero-kicker"),
       heroName: document.getElementById("hero-name"),
       heroIntro: document.getElementById("hero-intro"),
+      heroImage: document.getElementById("hero-image"),
+      heroImageFallback: document.getElementById("hero-image-fallback"),
       aboutSummaryOne: document.getElementById("about-summary-1"),
       aboutSummaryTwo: document.getElementById("about-summary-2"),
       quickFactsList: document.getElementById("quick-facts-list"),
@@ -185,11 +192,73 @@
     node.textContent = value;
   };
 
+  PortfolioView.prototype.setVisibility = function (node, isVisible) {
+    if (!node) {
+      return;
+    }
+    if (isVisible) {
+      node.classList.remove("is-hidden");
+    } else {
+      node.classList.add("is-hidden");
+    }
+  };
+
   PortfolioView.prototype.renderHero = function (hero, callback) {
+    var imageData = hero.image || {};
+    var imageNode = this.nodes.heroImage;
+    var fallbackNode = this.nodes.heroImageFallback;
+    var self = this;
+
+    function finalize() {
+      if (imageNode) {
+        imageNode.onload = null;
+        imageNode.onerror = null;
+      }
+      self.complete(callback);
+    }
+
+    function showFallback() {
+      self.setVisibility(imageNode, false);
+      self.setVisibility(fallbackNode, true);
+    }
+
+    function showImage() {
+      self.setVisibility(fallbackNode, false);
+      self.setVisibility(imageNode, true);
+    }
+
     this.setText(this.nodes.heroKicker, hero.kicker);
     this.setText(this.nodes.heroName, hero.name);
     this.setText(this.nodes.heroIntro, hero.intro);
-    this.complete(callback);
+
+    if (fallbackNode) {
+      this.setText(fallbackNode, imageData.fallbackInitials || "EA");
+    }
+
+    if (!imageNode) {
+      this.complete(callback);
+      return;
+    }
+
+    imageNode.alt = imageData.alt || "Profile photo";
+
+    if (!imageData.src) {
+      showFallback();
+      finalize();
+      return;
+    }
+
+    imageNode.onload = function () {
+      showImage();
+      finalize();
+    };
+
+    imageNode.onerror = function () {
+      showFallback();
+      finalize();
+    };
+
+    imageNode.src = imageData.src;
   };
 
   PortfolioView.prototype.renderAbout = function (about, callback) {
