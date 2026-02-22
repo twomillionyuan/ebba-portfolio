@@ -109,6 +109,16 @@
             "Managed social channels for committees and associations in the Media Technology Chapter.",
         },
       ],
+      projects: [
+        {
+          title: "OpenEvents - Ticketing Platform",
+          organization: "Eyevinn Technology (Intern Collaboration)",
+          description:
+            "Event planning and ticket buying/selling web app built with other interns at Eyevinn, inspired by platforms like Eventbrite.",
+          linkLabel: "Visit live app",
+          linkHref: "https://events.apps.osaas.io",
+        },
+      ],
       skills: [
         "Python",
         "Algorithms",
@@ -161,6 +171,7 @@
       experienceList: document.getElementById("experience-list"),
       educationList: document.getElementById("education-list"),
       engagementsList: document.getElementById("engagements-list"),
+      projectsList: document.getElementById("projects-list"),
       technicalSkillsList: document.getElementById("technical-skills-list"),
       languagesList: document.getElementById("languages-list"),
       contactTitle: document.getElementById("contact-title"),
@@ -440,6 +451,55 @@
     this.complete(callback);
   };
 
+  PortfolioView.prototype.renderProjects = function (items, callback) {
+    var list = this.nodes.projectsList;
+    var i;
+    var item;
+    var article;
+    var title;
+    var organization;
+    var description;
+    var link;
+
+    this.clearNode(list);
+
+    if (!list) {
+      this.complete(callback);
+      return;
+    }
+
+    for (i = 0; i < items.length; i += 1) {
+      item = items[i];
+      article = document.createElement("article");
+      article.className = "card project-card";
+
+      title = document.createElement("h3");
+      title.textContent = item.title;
+
+      organization = document.createElement("p");
+      organization.className = "muted";
+      organization.textContent = item.organization;
+
+      description = document.createElement("p");
+      description.textContent = item.description;
+
+      link = document.createElement("a");
+      link.className = "project-link";
+      link.textContent = item.linkLabel;
+      link.href = item.linkHref;
+      link.target = "_blank";
+      link.rel = "noreferrer";
+
+      article.appendChild(title);
+      article.appendChild(organization);
+      article.appendChild(description);
+      article.appendChild(link);
+      list.appendChild(article);
+    }
+
+    this.complete(callback);
+  };
+
   PortfolioView.prototype.renderSkills = function (skills, callback) {
     var list = this.nodes.technicalSkillsList;
     var i;
@@ -625,6 +685,9 @@
         },
         function (next) {
           self.view.renderEngagements(data.engagements, next);
+        },
+        function (next) {
+          self.view.renderProjects(data.projects, next);
         },
         function (next) {
           self.view.renderSkills(data.skills, next);
