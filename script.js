@@ -130,11 +130,11 @@
           linkHref: "https://stsweevent.apps.osaas.io",
         },
         {
-          title: "HT25 Project",
-          organization: "Collaborative Student Project",
+          title: "Bookboxd",
+          organization: "KTH Course Project",
           description:
-            "A course project I worked on together with a team.",
-          linkLabel: "View project repository",
+            "A book app I built in a team, inspired by Letterboxd and Goodreads.",
+          linkLabel: "View project",
           linkHref: "https://github.com/twomillionyuan/ebbaado-felars-iscs-vkumar-HT25-Project",
         },
       ],
