@@ -130,12 +130,36 @@
           linkHref: "https://stsweevent.apps.osaas.io",
         },
         {
+          title: "TaskSnap",
+          organization: "Mobile App Project",
+          description:
+            "A to-do app I built with Expo and an OSC backend managed through MCP.",
+          linkLabel: "View project",
+          linkHref: "https://github.com/twomillionyuan/tasklog",
+        },
+        {
           title: "Bookboxd",
           organization: "KTH Course Project",
           description:
             "A book app I built in a team, inspired by Letterboxd and Goodreads.",
           linkLabel: "View project",
           linkHref: "https://github.com/twomillionyuan/ebbaado-felars-iscs-vkumar-HT25-Project",
+        },
+        {
+          title: "Booking Site for Thesis Meetings",
+          organization: "Web App Project",
+          description:
+            "A booking site for thesis meeting slots, built with a simple admin flow and CouchDB.",
+          linkLabel: "Visit live app",
+          linkHref: "https://twomillionyuan.github.io/kandidatexamensarbete-booking/",
+        },
+        {
+          title: "Deloitte Hackathon Project",
+          organization: "Hackathon Team Project",
+          description:
+            "A team project built during a Deloitte hackathon.",
+          linkLabel: "View project",
+          linkHref: "https://github.com/twomillionyuan/DeloitteHackathonGroup5",
         },
       ],
       skills: [
