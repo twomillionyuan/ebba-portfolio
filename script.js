@@ -142,8 +142,8 @@
           organization: "KTH Course Project",
           description:
             "A book app I built in a team, inspired by Letterboxd and Goodreads.",
-          linkLabel: "View project",
-          linkHref: "https://github.com/twomillionyuan/ebbaado-felars-iscs-vkumar-HT25-Project",
+          linkLabel: "Visit live app",
+          linkHref: "https://bookboxdd.web.app/",
         },
         {
           title: "Booking Site for Thesis Meetings",
