@@ -130,7 +130,23 @@
           linkHref: "https://stsweevent.apps.osaas.io",
         },
         {
-          title: "TaskSnap",
+          title: "Focus Planner",
+          organization: "Planner App Project",
+          description:
+            "A simple planner app I built with Codex, from idea to MVP, and deployed live on OSC.",
+          linkLabel: "Visit live app",
+          linkHref: "https://focusplanner.apps.osaas.io/",
+        },
+        {
+          title: "PageTurner",
+          organization: "Book App Project",
+          description:
+            "A book app with search, lists, profiles, and CouchDB integration, built and deployed on OSC.",
+          linkLabel: "Visit live app",
+          linkHref: "https://pageturner.apps.osaas.io/",
+        },
+        {
+          title: "TaskLog",
           organization: "Mobile App Project",
           description:
             "A to-do app I built with Expo and an OSC backend managed through MCP.",
