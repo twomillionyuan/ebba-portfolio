@@ -7,7 +7,7 @@
         kicker: "Engineering Student at KTH",
         name: "Ebba Adolphson",
         intro:
-          "I build digital products, support student learning, and help teams execute ambitious projects. I am currently focused on software development, product functionality, and collaborative problem-solving.",
+          "I study Media Technology at KTH and I like working on software projects, helping students, and being part of practical teams.",
         image: {
           src: "assets/ebba-profile.jpg?v=1",
           alt: "Portrait of Ebba Adolphson",
@@ -16,9 +16,9 @@
       },
       about: {
         summaryOne:
-          "MSc Media Technology student at the Royal Institute of Technology (KTH), with hands-on experience in software development, teaching, communication, and event coordination.",
+          "I am studying Media Technology at KTH and have experience from software development, teaching, and event work.",
         summaryTwo:
-          "I enjoy combining technical depth with people-facing responsibilities, from coding and product improvement to guiding students and building strong company relationships.",
+          "I like work where I get to combine technical tasks with working with people, whether that means coding, helping students, or coordinating projects.",
       },
       quickFacts: [
         {
@@ -133,7 +133,7 @@
           title: "HT25 Project",
           organization: "Collaborative Student Project",
           description:
-            "Course project developed in a team, published here as part of my portfolio work.",
+            "A course project I worked on together with a team.",
           linkLabel: "View project repository",
           linkHref: "https://github.com/twomillionyuan/ebbaado-felars-iscs-vkumar-HT25-Project",
         },
