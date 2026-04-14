@@ -129,6 +129,14 @@
           linkLabel: "Visit live app",
           linkHref: "https://events.apps.osaas.io",
         },
+        {
+          title: "HT25 Project",
+          organization: "Collaborative Student Project",
+          description:
+            "Course project developed in a team, published here as part of my portfolio work.",
+          linkLabel: "View project repository",
+          linkHref: "https://github.com/twomillionyuan/ebbaado-felars-iscs-vkumar-HT25-Project",
+        },
       ],
       skills: [
         "Python",
