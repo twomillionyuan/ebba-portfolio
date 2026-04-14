@@ -130,6 +130,14 @@
           linkHref: "https://stsweevent.apps.osaas.io",
         },
         {
+          title: "Bookboxd",
+          organization: "KTH Course Project",
+          description:
+            "A book app I built in a team, inspired by Letterboxd and Goodreads.",
+          linkLabel: "Visit live app",
+          linkHref: "https://bookboxdd.web.app/",
+        },
+        {
           title: "Focus Planner",
           organization: "Planner App Project",
           description:
@@ -152,14 +160,6 @@
             "A to-do app I built with Expo and an OSC backend managed through MCP.",
           linkLabel: "View project",
           linkHref: "https://github.com/twomillionyuan/tasklog",
-        },
-        {
-          title: "Bookboxd",
-          organization: "KTH Course Project",
-          description:
-            "A book app I built in a team, inspired by Letterboxd and Goodreads.",
-          linkLabel: "Visit live app",
-          linkHref: "https://bookboxdd.web.app/",
         },
         {
           title: "Booking Site for Thesis Meetings",
