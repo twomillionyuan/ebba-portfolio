@@ -127,7 +127,7 @@
           description:
             "Event planning and ticket buying/selling web app built with other interns at Eyevinn, inspired by platforms like Eventbrite.",
           linkLabel: "Visit live app",
-          linkHref: "https://events.apps.osaas.io",
+          linkHref: "https://stsweevent.apps.osaas.io",
         },
         {
           title: "HT25 Project",
