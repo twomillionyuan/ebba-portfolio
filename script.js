@@ -158,6 +158,11 @@
           },
           { label: "+46 76-025 94 55", href: "tel:+46760259455" },
           { label: "LinkedIn", href: "https://www.linkedin.com", external: true },
+          {
+            label: "GitHub",
+            href: "https://github.com/twomillionyuan",
+            external: true,
+          },
         ],
       },
     };
