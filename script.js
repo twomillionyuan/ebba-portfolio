@@ -6,8 +6,7 @@
       hero: {
         kicker: "Engineering Student at KTH",
         name: "Ebba Adolphson",
-        intro:
-          "I study Media Technology at KTH and I like working on software projects, helping students, and being part of practical teams.",
+        intro: "",
         image: {
           src: "assets/ebba-profile.jpg?v=1",
           alt: "Portrait of Ebba Adolphson",
