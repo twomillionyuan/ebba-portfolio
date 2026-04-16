@@ -7,11 +7,6 @@
         kicker: "Engineering Student at KTH",
         name: "Ebba Adolphson",
         intro: "",
-        image: {
-          src: "assets/ebba-profile.jpg?v=1",
-          alt: "Portrait of Ebba Adolphson",
-          fallbackInitials: "EA",
-        },
       },
       about: {
         summaryOne:
@@ -229,9 +224,6 @@
       heroKicker: document.getElementById("hero-kicker"),
       heroName: document.getElementById("hero-name"),
       heroIntro: document.getElementById("hero-intro"),
-      heroImage: document.getElementById("hero-image"),
-      heroImageFallback: document.getElementById("hero-image-fallback"),
-      heroPhotoFrame: document.querySelector(".hero-photo-frame"),
       aboutSummaryOne: document.getElementById("about-summary-1"),
       aboutSummaryTwo: document.getElementById("about-summary-2"),
       quickFactsList: document.getElementById("quick-facts-list"),
@@ -291,69 +283,10 @@
   };
 
   PortfolioView.prototype.renderHero = function (hero, callback) {
-    var imageData = hero.image || {};
-    var imageNode = this.nodes.heroImage;
-    var fallbackNode = this.nodes.heroImageFallback;
-    var self = this;
-
-    function finalize() {
-      if (imageNode) {
-        imageNode.onload = null;
-        imageNode.onerror = null;
-      }
-      self.complete(callback);
-    }
-
-    function showFallback() {
-      self.setVisibility(imageNode, false);
-      self.setVisibility(fallbackNode, true);
-    }
-
-    function showImage() {
-      self.setVisibility(fallbackNode, false);
-      self.setVisibility(imageNode, true);
-    }
-
     this.setText(this.nodes.heroKicker, hero.kicker);
     this.setText(this.nodes.heroName, hero.name);
     this.setText(this.nodes.heroIntro, hero.intro);
-
-    if (fallbackNode) {
-      this.setText(fallbackNode, imageData.fallbackInitials || "EA");
-    }
-
-    if (!imageNode) {
-      this.complete(callback);
-      return;
-    }
-
-    imageNode.alt = imageData.alt || "Profile photo";
-
-    if (!imageData.src) {
-      showFallback();
-      finalize();
-      return;
-    }
-
-    imageNode.onload = function () {
-      showImage();
-      finalize();
-    };
-
-    imageNode.onerror = function () {
-      showFallback();
-      finalize();
-    };
-
-    if (imageNode.src !== imageData.src) {
-      imageNode.src = imageData.src;
-    }
-
-    if (imageNode.complete && imageNode.naturalWidth > 0) {
-      showImage();
-      finalize();
-      return;
-    }
+    this.complete(callback);
   };
 
   PortfolioView.prototype.renderAbout = function (about, callback) {
