@@ -10,9 +10,9 @@
       },
       about: {
         summaryOne:
-          "I am studying Media Technology at KTH and have experience from software development, teaching, and event work.",
+          "Hi, my name is Ebba and I am in the final year of my bachelor's degree in Media Technology at KTH.",
         summaryTwo:
-          "I like work where I get to combine technical tasks with working with people, whether that means coding, helping students, or coordinating projects.",
+          "Through my studies and work, I have gained experience in software development, teaching programming, and engineering. I love work where I get to combine technical tasks with working with people, whether that means coding, helping students, or coordinating projects.",
       },
       quickFacts: [
         {
