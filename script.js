@@ -272,6 +272,11 @@
       return;
     }
     node.textContent = value;
+    if (value) {
+      node.classList.remove("is-hidden");
+    } else {
+      node.classList.add("is-hidden");
+    }
   };
 
   PortfolioView.prototype.setVisibility = function (node, isVisible) {

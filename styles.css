@@ -198,6 +198,10 @@ h3 {
   color: var(--muted);
 }
 
+.hero-intro:empty {
+  display: none;
+}
+
 .hero-photo-shell {
   display: flex;
   justify-content: flex-end;
